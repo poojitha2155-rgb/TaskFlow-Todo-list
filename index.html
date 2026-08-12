@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow - Todo App</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+
+            <span>TaskFlow</span>
+        </div>
+
+
+        <nav>
+
+            <p class="menu-title">MENU</p>
+
+            <a href="#" class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-list-check"></i>
+                <span>My Tasks</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Calendar</span>
+            </a>
+
+
+            <p class="menu-title">WORKSPACE</p>
+
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-folder"></i>
+                <span>Projects</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="upgrade-card">
+
+                <i class="fa-solid fa-sparkles"></i>
+
+                <h4>Stay productive</h4>
+
+                <p>
+                    Keep your tasks organized and get things done.
+                </p>
+
+            </div>
+
+            <div class="profile">
+
+                <div class="avatar">
+                    P
+                </div>
+
+                <div>
+                    <strong>Poojitha</strong>
+                    <small>Personal workspace</small>
+                </div>
+
+                <i class="fa-solid fa-ellipsis"></i>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+                <p class="welcome">Good evening 👋</p>
+
+                <h1>
+                    Let's get things done.
+                </h1>
+            </div>
+
+            <div class="top-actions">
+
+                <button class="icon-button">
+                    <i class="fa-regular fa-bell"></i>
+                </button>
+
+                <button class="avatar top-avatar">
+                    P
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= STATS ================= -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+
+                <div>
+                    <p>Total Tasks</p>
+                    <h2 id="totalTasks">0</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+
+                <div>
+                    <p>Completed</p>
+                    <h2 id="completedTasks">0</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon orange">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+
+                <div>
+                    <p>Pending</p>
+                    <h2 id="pendingTasks">0</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card progress-card">
+
+                <div class="progress-circle">
+
+                    <span id="progressPercent">
+                        0%
+                    </span>
+
+                </div>
+
+                <div>
+                    <p>Progress</p>
+                    <h2>Today</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <section class="content">
+
+            <div class="task-header">
+
+                <div>
+                    <h2>My Tasks</h2>
+
+                    <p>
+                        Manage your daily tasks and stay productive.
+                    </p>
+                </div>
+
+                <button
+                    class="add-task-button"
+                    onclick="openTaskModal()"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    Add Task
+                </button>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="toolbar">
+
+                <div class="search">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search tasks..."
+                    >
+
+                </div>
+
+
+                <div class="filters">
+
+                    <button
+                        class="filter active"
+                        data-filter="all"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-filter="active"
+                    >
+                        Active
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-filter="completed"
+                    >
+                        Completed
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- TASK LIST -->
+
+            <div id="taskList" class="task-list"></div>
+
+
+            <!-- EMPTY STATE -->
+
+            <div
+                id="emptyState"
+                class="empty-state"
+            >
+
+                <div class="empty-icon">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+
+                <h3>No tasks found</h3>
+
+                <p>
+                    Add your first task and start being productive.
+                </p>
+
+                <button
+                    onclick="openTaskModal()"
+                    class="empty-button"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    Create Task
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ================= MODAL ================= -->
+
+<div
+    id="taskModal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>Create a new task</h2>
+
+                <p>
+                    Add a task to your workspace.
+                </p>
+            </div>
+
+            <button
+                class="close-button"
+                onclick="closeTaskModal()"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <form id="taskForm">
+
+            <label>
+                Task title
+            </label>
+
+            <input
+                type="text"
+                id="taskTitle"
+                placeholder="e.g. Complete JavaScript project"
+                required
+            >
+
+
+            <label>
+                Description
+            </label>
+
+            <textarea
+                id="taskDescription"
+                placeholder="Add some details..."
+            ></textarea>
+
+
+            <div class="form-row">
+
+                <div>
+
+                    <label>
+                        Priority
+                    </label>
+
+                    <select id="taskPriority">
+
+                        <option value="low">
+                            Low
+                        </option>
+
+                        <option value="medium" selected>
+                            Medium
+                        </option>
+
+                        <option value="high">
+                            High
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Due date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="taskDate"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="cancel-button"
+                    onclick="closeTaskModal()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="create-button"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    Create Task
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
